@@ -75,11 +75,12 @@ class PlexRemoteClient(object):
     def get_item_by(self, name):
         if isinstance(name, unicode):
             name = name.encode('utf-8')
-        res = self._get('/all?type=8&title=%s&sort=titleSort:asc' % urllib.quote(name))
+        res = self._get('/all?type=8&title=%s&sort=titleSort:asc' % urllib.quote(name)).get('results')
+        logger.info("*" * 80)
         logger.info(res)
-        logger.info(res.get('results'))
+        # logger.info(res.get('results'))
         logger.info(dir(res))
-        logger.info(res.__dict__)
+        logger.info("*" * 80)
         try:
             return self._parse_query(res)
         except Exception:
@@ -89,7 +90,7 @@ class PlexRemoteClient(object):
     def get_album_by(self, name):
         if isinstance(name, unicode):
             name = name.encode('utf-8')
-        res = self._get('/album/query/%s' % urllib.quote(name)).get('results')
+        res = self._get('/all?type=9&title=%s&sort=titleSort:asc' % urllib.quote(name))
         try:
             return self._parse_query(res[0]['items'])
         except Exception:
@@ -123,6 +124,8 @@ class PlexRemoteClient(object):
         album_kwargs = {}
         artist_kwargs = {}
         albumartist_kwargs = {}
+
+        logger.info(data)
 
         if 'track' in data:
             track_kwargs['track_no'] = int(data['track'])
