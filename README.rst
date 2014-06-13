@@ -39,7 +39,16 @@ Before starting Mopidy, you must add configuration for
 Mopidy-Plex to your Mopidy configuration file::
 
     [plex]
-    # TODO: Add example of extension config
+    hostname = <ipaddr>
+    port = 32400
+    library = 3
+
+To find your library location id, navigate inside a web browser to http://[YOUR_PMS_IP]:32400/library/sections and watch
+for a similar entry::
+
+    <Directory allowSync="0" art="/:/resources/artist-fanart.jpg" filters="1" refreshing="0" thumb="/:/resources/artist.png" key="3" type="artist" title="Music" ...
+      <Location id="3" path="/media/data1/Music"/>
+    </Directory>
 
 
 Project resources
@@ -48,6 +57,14 @@ Project resources
 - `Source code <https://github.com/rthill/mopidy-plex>`_
 - `Issue tracker <https://github.com/rthill/mopidy-plex/issues>`_
 - `Download development snapshot <https://github.com/rthill/mopidy-plex/archive/master.tar.gz#egg=Mopidy-Plex-dev>`_
+
+Thanks
+======
+
+The following extensions are great and helped me a lot to build the Plex extension:
+
+- `Mopidy-Beets <https://github.com/mopidy/mopidy-beets>`_
+- `Mopidy-Soundcloud <https://github.com/mopidy/mopidy-soundcloud>`_
 
 
 Changelog

@@ -3,12 +3,6 @@ from __future__ import unicode_literals
 import logging
 import os
 
-# TODO: Remove entirely if you don't register GStreamer elements below
-import pygst
-pygst.require('0.10')
-import gst
-import gobject
-
 from mopidy import config, ext
 
 
@@ -31,23 +25,11 @@ class Extension(ext.Extension):
     def get_config_schema(self):
         schema = super(Extension, self).get_config_schema()
         # TODO: Comment in and edit, or remove entirely
-        #schema['username'] = config.String()
-        #schema['password'] = config.Secret()
+        schema['hostname'] = config.Hostname()
+        schema['port'] = config.Port()
+        schema['library'] = config.Integer()
         return schema
 
     def setup(self, registry):
-        # You will typically only implement one of the following things
-        # in a single extension.
-
-        # TODO: Edit or remove entirely
-        from .frontend import FoobarFrontend
-        registry.add('frontend', FoobarFrontend)
-
-        # TODO: Edit or remove entirely
-        from .backend import FoobarBackend
-        registry.add('backend', FoobarBackend)
-
-        # TODO: Edit or remove entirely
-        from .mixer import FoobarMixer
-        gobject.type_register(FoobarMixer)
-        gst.element_register(FoobarMixer, 'foobarmixer', gst.RANK_MARGINAL)
+        from .actor import PlexBackend
+        registry.add('backend', PlexBackend)
